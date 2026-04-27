@@ -59,6 +59,8 @@ No external dependencies are required.
 
 ## Usage
 
+Use phone numbers in international format, including the leading `+`.
+
 ```tsx
 import { WhatsAppButton } from "@/components/whatsapp-button";
 
@@ -71,12 +73,12 @@ export function Example() {
       items={[
         {
           label: "Sales",
-          phone: "905xxxxxxxxx",
+          phone: "+905xxxxxxxxx",
           message: "Hi, I need info.",
         },
         {
           label: "Support",
-          phone: "905xxxxxxxxx",
+          phone: "+905xxxxxxxxx",
           message: "Hi, I need help.",
         },
       ]}
@@ -98,7 +100,7 @@ export function Example() {
       items={[
         {
           label: "WhatsApp",
-          phone: "905xxxxxxxxx",
+          phone: "+905xxxxxxxxx",
           message: "Hello! I would like to get more information.",
         },
       ]}
