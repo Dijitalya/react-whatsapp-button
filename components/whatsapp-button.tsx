@@ -25,6 +25,14 @@ type WhatsAppButtonProps = {
   items?: WhatsAppButtonItem[];
   ariaLabel?: string;
   closedLabel?: string;
+
+  /**
+   * Shows or hides the closed label next to the floating button.
+   * Only applies when there are multiple valid items.
+   * @default true
+   */
+  showClosedLabel?: boolean;
+
   title?: string;
   className?: string;
 
@@ -225,7 +233,7 @@ function WhatsAppIcon({ className = "h-8 w-8" }: { className?: string }) {
       className={className}
       aria-hidden="true"
     >
-      <path d="M19.11 17.24c-.27-.13-1.6-.79-1.85-.88-.25-.09-.43-.13-.62.14-.18.27-.71.88-.87 1.06-.16.18-.32.2-.6.07-.27-.13-1.14-.42-2.17-1.35-.8-.71-1.34-1.58-1.5-1.85-.16-.27-.02-.42.12-.55.12-.12.27-.32.4-.48.13-.16.18-.27.27-.46.09-.18.04-.34-.02-.48-.07-.13-.62-1.5-.84-2.05-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.48.07-.73.34-.25.27-.96.93-.96 2.27 0 1.34.98 2.64 1.11 2.82.13.18 1.92 2.93 4.65 4.11.65.28 1.16.45 1.55.57.65.21 1.24.18 1.7.11.52-.08 1.6-.65 1.82-1.28.23-.63.23-1.18.16-1.28-.07-.11-.25-.18-.52-.32Z" />
+      <path d="M19.11 17.24c-.27-.13-1.6-.79-1.85-.88-.25-.09-.43-.13-.62.14-.18.27-.71.88-.87 1.06-.16.18-.32.2-.6.07-.27-.13-1.14-.42-2.17-1.35-.8-.71-1.34-1.58-1.5-1.85-.16-.27-.02-.42.12-.55.12-.12.27-.32.4-.48.13-.16.18-.27.27-.46.09-.18.04-.34-.02-.48-.07-.13-.62-1.5-.84-2.05-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.48.07-.73.34-.25.27-.96.93-.96 2.27 0 1.34.98 2.64 1.11 2.82.13.18 1.92 2.93 4.65 4.11.65.28 1.16.45 1.55.57.65.21 1.24.18 1.7.11.52-.08 1.6-.65 1.82-1.28.23-.63.23-1.18.16-1.28-.07-.11-.25-.18-.52-.32Z" transform="translate(1.95 0.75)" />
       <path d="M16.03 3C8.85 3 3 8.74 3 15.81c0 2.26.6 4.47 1.74 6.42L3 29l6.98-1.82a13.13 13.13 0 0 0 6.05 1.46h.01c7.18 0 13.03-5.74 13.03-12.81C29.07 8.74 23.21 3 16.03 3Zm0 23.43h-.01a10.9 10.9 0 0 1-5.55-1.52l-.4-.24-4.14 1.08 1.11-4.01-.26-.41a10.56 10.56 0 0 1-1.64-5.53c0-5.84 4.85-10.6 10.89-10.6 2.91 0 5.64 1.11 7.69 3.13a10.38 10.38 0 0 1 3.19 7.47c0 5.85-4.86 10.61-10.88 10.61Z" />
     </svg>
   );
@@ -266,6 +274,7 @@ export function WhatsAppButton({
   items = [],
   ariaLabel = "WhatsApp üzerinden iletişime geç",
   closedLabel = "WhatsApp",
+  showClosedLabel = true,
   title = "WhatsApp üzerinden iletişime geç",
   className = "",
   size = "md",
@@ -327,7 +336,7 @@ export function WhatsAppButton({
         title={title}
         style={styles}
         className={cx(
-          "fixed bottom-6 right-6 z-50 inline-flex items-center justify-center rounded-full bg-[color:var(--whatsapp-button-color)] text-[color:var(--whatsapp-button-text-color)] shadow-lg transition-transform duration-200 hover:scale-105 focus:outline-none",
+          "fixed bottom-6 right-6 z-100 inline-flex items-center justify-center rounded-full bg-[color:var(--whatsapp-button-color)] text-[color:var(--whatsapp-button-text-color)] shadow-lg transition-transform duration-200 hover:scale-105 focus:outline-none",
           classes.singleButton,
           className,
         )}
@@ -343,20 +352,22 @@ export function WhatsAppButton({
       ref={containerRef}
       style={styles}
       className={cx(
-        "fixed bottom-4 left-4 right-4 z-50 flex items-center justify-end sm:bottom-6 sm:left-auto sm:right-6",
+        "font-body fixed bottom-4 left-4 right-4 z-100 flex items-center justify-end sm:bottom-6 sm:left-auto sm:right-6",
         classes.gap,
         className,
       )}
     >
-      <span
-        className={cx(
-          "pointer-events-none select-none whitespace-nowrap text-lg font-medium leading-none tracking-tight text-[color:var(--whatsapp-button-color)] drop-shadow-sm transition-opacity sm:text-base",
-          isOpen ? "opacity-0 duration-100" : "opacity-75 duration-300 delay-150",
-        )}
-        aria-hidden={isOpen}
-      >
-        {closedLabel}
-      </span>
+      {showClosedLabel && (
+        <span
+          className={cx(
+            "pointer-events-none select-none whitespace-nowrap text-lg font-medium leading-none tracking-tight text-[color:var(--whatsapp-button-color)] drop-shadow-sm transition-opacity sm:text-base",
+            isOpen ? "opacity-0 duration-100" : "opacity-75 duration-300 delay-150",
+          )}
+          aria-hidden={isOpen}
+        >
+          {closedLabel}
+        </span>
+      )}
 
       <div
         id={menuId}
